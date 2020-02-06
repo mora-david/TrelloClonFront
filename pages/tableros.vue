@@ -133,8 +133,13 @@ this.destroy('hidden123')
     },
     getTableros() {
       const url = '/api/api/v1/tableros/'
+      const yourConfig = {
+   headers: {
+      Authorization: "Bearer " + this.$store.state.user.token
+   }
+}
       axios
-        .get(url)
+        .get(url, yourConfig)
         .then((response) => {
           this.categories = response.data.results
           this.prueba = response.data
@@ -146,9 +151,14 @@ this.destroy('hidden123')
         })
     },
         getListas() {
+          const yourConfig = {
+   headers: {
+      Authorization: "Bearer " + this.$store.state.user.token
+   }
+}
       const url = '/api/api/v1/listas/'
       axios
-        .get(url)
+        .get(url, yourConfig)
         .then((response) => {
           this.lists = response.data.results
         })
@@ -159,10 +169,7 @@ this.destroy('hidden123')
   }}
 </script>
 
-<style>
-body {
-    
-}
-
-
+<style lang="sass">
+body
+  color: red
 </style>

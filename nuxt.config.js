@@ -12,7 +12,11 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      {}
+      
+    ],
+    script: [
+      { src: 'https://kit.fontawesome.com/50ead72691.js' },
+      
     ]
   },
   /*

@@ -10,16 +10,17 @@
   <div class="card-body">
     <h4 class="card-title text-center">{{list.nombre}}</h4>
         <h4 class="card-title text-center">{{list.id}}</h4>
+        
 
   </div>
+  <p>{{list}}</p>
   <div :style="ht100" :id="list.nombre + 'id'">
   <ul class="list-group list-group-flush">
     <li :class="'list-group-item '+ listperTab(card.lista, list.id, card.nombre)" v-for="card in cards" :key="card.id">{{listperTab(card.lista, list.id, card.nombre)}}</li>
   </ul>
   </div>
-  <div class="card-body row justify-content-between">
-    <a href="#" class="card-link">Tablero</a>
-    <a href="#" class="card-link">Favoritos</a>
+  <div class="card-body row ">
+        <nuxt-link :to="'/tablero/' + list.tablero">Tablero</nuxt-link>
   </div>
   <div  class="row justify-content-center mt-3 mb-3">
       <button @click="showListasFull()" :id="list.nombre + 'btn'">BTN</button>
@@ -133,8 +134,13 @@ this.destroy('hidden123')
       },
     getTableros() {
       const url = '/api/api/v1/listas/'
+      const yourConfig = {
+   headers: {
+      Authorization: "Bearer " + this.$store.state.user.token
+   }
+}
       axios
-        .get(url)
+        .get(url, yourConfig)
         .then((response) => {
           this.lists = response.data.results
               this.arrPag()
@@ -146,8 +152,13 @@ this.destroy('hidden123')
     },
         getCards() {
       const url = '/api/api/v1/tarjetas/'
+      const yourConfig = {
+   headers: {
+      Authorization: "Bearer " + this.$store.state.user.token
+   }
+}
       axios
-        .get(url)
+        .get(url, yourConfig)
         .then((response) => {
           this.cards = response.data.results
         })

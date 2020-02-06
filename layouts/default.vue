@@ -1,8 +1,18 @@
 <template>
   <div>
+    <top></top>
     <nuxt />
   </div>
 </template>
+
+<script>
+import top from '@/components/top.vue'
+export default {
+  components: {
+    top,
+  }
+}
+</script>
 
 <style>
 html {
