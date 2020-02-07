@@ -1,13 +1,14 @@
 <template>
   <div>
     <div class="container-list container">
-      <div class="child-list mt-5" v-for="list in this.lister" :key="list.id">
+      <div class="child-list mt-5" v-for="list in this.lister" :key="list.id" :id="'parent'+list.id">
         <p class="element-list">{{list.nombre}}</p>
 
-        <div v-for="card in cards" :key="card.id">
-          <div class="element-card" v-if="card.lista == list.id">
-            <i style="margin:7px" class="fas fa-grip-vertical"></i>
+        <div v-for="card in cards" :key="card.id" :id="'child'+card.id+list.id">
+          <div class="element-card" v-if="card.lista == list.id" >
+            <i style="margin:7px" class="fas fa-grip-vertical" :id="'card' + card.id"></i>
             {{card.nombre}}
+            <a @click="delateCards(card.id,'parent'+list.id, 'child'+card.id+list.id)" class="button-task">Delate</a>
           </div>
         </div>
         <div :id="'card'+ list.id"></div>
@@ -64,6 +65,28 @@ export default {
     this.destroy("hidden123");
   },
   methods: {
+    delateCards(id,parent, child){
+      const url = "/api/api/v1/tarjetas/"+id+'/';
+      let parent1 = document.getElementById(parent)
+      let child1 = document.getElementById(child)
+      console.log(parent1)
+      console.log(child1)
+      //parent1.removeChild(child1)
+      const yourConfig = {
+        headers: {
+          Authorization: "Bearer"+this.$store.state.user.token
+        }
+      };
+      axios
+        .delete(url, yourConfig)
+        .then(response => {
+          return response.data.results;
+        })
+        .catch(() => {
+          alert("error");
+        });
+
+    },
     pushCards(a, b, idd) {
       var c = document.getElementById(a).value;
       var d = document.getElementById(b).innerHTML;
@@ -143,11 +166,17 @@ export default {
         });
     },
     pushCards1(nombre1, id) {
+      console.log(nombre1)
       const url = "/api/api/v1/tarjetas/";
       const yourConfigh = {
         headers: {
-          Authorization: "Bearer " + this.$store.state.user.token
+          Authorization: `Bearer ${this.$store.state.user.token}`
         }}
+        if(nombre1 == ''){
+          nombre1 = 'empty'
+        }
+       
+        
       const yourConfigb = {
         nombre: nombre1,
         lista: id.toString(),
