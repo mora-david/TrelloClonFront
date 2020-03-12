@@ -133,7 +133,7 @@ this.destroy('hidden123')
       return 'hidden123'
     },
     getTableros() {
-      const url = '/api/api/v1/tableros/'
+      const url = 'https://rocky-chamber-99447.herokuapp.com/api/v1/tableros/'
       const yourConfig = {
    headers: {
       Authorization: "Bearer " + this.$store.state.user.token
@@ -157,7 +157,7 @@ this.destroy('hidden123')
       Authorization: "Bearer " + this.$store.state.user.token
    }
 }
-      const url = '/api/api/v1/listas/'
+      const url = 'https://rocky-chamber-99447.herokuapp.com/api/v1/listas/'
       axios
         .get(url, yourConfig)
         .then((response) => {

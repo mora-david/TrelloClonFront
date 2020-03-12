@@ -55,7 +55,7 @@
       token = {{"'"+tkn+"'"}}
       function delatelem(parent, child, id) {
       parent.removeChild(child);
-      const url = "/api/api/v1/tarjetas/" + id + "/";
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/tarjetas/" + id + "/";
       const yourConfig = {
         headers: {
           Authorization: "Bearer " + token
@@ -156,7 +156,7 @@ export default {
 
         //const url = "/api/api/v1/listas/"+id
         //const url = "/api/api/v1/listas/" + 6 + "/";
-        const url = `/api/api/v1/listas/${id}/`
+        const url = `https://rocky-chamber-99447.herokuapp.com/api/v1/listas/${id}/`
         console.log(url)
         let parent1 = document.getElementById(parent);
         let child1 = document.getElementById(child);
@@ -201,7 +201,7 @@ export default {
 
     saveList(id,input,nombre,save){
 
-        const url = `/api/api/v1/listas/${id}/`
+        const url = `https://rocky-chamber-99447.herokuapp.com/api/v1/listas/${id}/`
          var element3 = document.getElementById(input).value;
          document.getElementById(nombre).innerHTML = element3
          this.toggleList(id,input,nombre,save)
@@ -233,7 +233,7 @@ export default {
       var d = new Date()
       var fecha = `${d.getFullYear()}-${1}${d.getMonth()+1}-${d.getDate()}`
       console.log(fecha)
-      const url = "/api/api/v1/listas/";
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/listas/";
       const yourConfigh = {
         headers: {
           Authorization: `Bearer ${this.$store.state.user.token}`
@@ -284,7 +284,7 @@ var element = document.getElementById(id);
   element1.firstChild.firstChild.innerHTML = element2.value
 
    {
-      const url = "/api/api/v1/tarjetas/" + idp + '/';
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/tarjetas/" + idp + '/';
       const yourConfigh = {
         headers: {
           Authorization: `Bearer ${this.$store.state.user.token}`
@@ -316,7 +316,7 @@ var element = document.getElementById(id);
     },
     
     delateCards(id, parent, child) {
-      const url = "/api/api/v1/tarjetas/" + id + "/";
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/tarjetas/" + id + "/";
       console.log(url)
       let parent1 = document.getElementById(parent);
       let child1 = document.getElementById(child);
@@ -402,7 +402,7 @@ var element = document.getElementById(id);
         } 
       };
       axios
-        .get("/api/api/v1/tarjetas1/", yourConfig)
+        .get("https://rocky-chamber-99447.herokuapp.com/api/v1/tarjetas1/", yourConfig)
         .then(response => {
           this.toptop = response.data.results;
           document.getElementById(a).value = ""
@@ -418,7 +418,7 @@ var element = document.getElementById(id);
         } 
       };
       axios
-        .get("/api/api/v1/tableros/", yourConfig)
+        .get("https://rocky-chamber-99447.herokuapp.com/api/v1/tableros/", yourConfig)
         .then(response => { 
           this.lasttablero = response.data.results[0].id
         })  
@@ -427,7 +427,7 @@ var element = document.getElementById(id);
         });
     },
     getCards() {
-      const url = "/api/api/v1/tarjetas/";
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/tarjetas/";
       const yourConfig = {
         headers: {
           Authorization: "Bearer " + this.$store.state.user.token
@@ -448,7 +448,7 @@ var element = document.getElementById(id);
     pushCards1(nombre1, id, idtemp, c,b, b1, idtemp1,a) {
       var d = new Date()
       var fecha = `${d.getFullYear()}-${1}${d.getMonth()+1}-${d.getDate()}`
-      const url = "/api/api/v1/tarjetas/";
+      const url = "https://rocky-chamber-99447.herokuapp.com//api/v1/tarjetas/";
       const yourConfigh = {
         headers: {
           Authorization: `Bearer ${this.$store.state.user.token}`
@@ -481,7 +481,7 @@ var element = document.getElementById(id);
     },
 
     getTableros() {
-      const url = "/api/api/v1/tableros/";
+      const url = "https://rocky-chamber-99447.herokuapp.com//api/v1/tableros/";
       const yourConfig = {
         headers: {
           Authorization: "Bearer " + this.$store.state.user.token
@@ -507,7 +507,7 @@ var element = document.getElementById(id);
           Authorization: "Bearer " + this.$store.state.user.token
         }
       };
-      const url = "/api/api/v1/listas/";
+      const url = "https://rocky-chamber-99447.herokuapp.com//api/v1/listas/";
       axios
         .get(url, yourConfig)
         .then(response => {

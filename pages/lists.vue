@@ -135,7 +135,7 @@ this.destroy('hidden123')
           this.ht100 = ''
       },
     getTableros() {
-      const url = '/api/api/v1/listas/'
+      const url = 'https://rocky-chamber-99447.herokuapp.com/api/v1/listas/'
       const yourConfig = {
    headers: {
       Authorization: "Bearer " + this.$store.state.user.token
@@ -153,7 +153,7 @@ this.destroy('hidden123')
         })
     },
         getCards() {
-      const url = '/api/api/v1/tarjetas/'
+      const url = 'https://rocky-chamber-99447.herokuapp.com/api/v1/tarjetas/'
       const yourConfig = {
    headers: {
       Authorization: "Bearer " + this.$store.state.user.token

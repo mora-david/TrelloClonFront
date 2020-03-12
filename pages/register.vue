@@ -58,7 +58,7 @@ export default {
         ...mapMutations(['login']),
     onSubmit() {
       console.log('login')
-      const dire = '/api/api/token/'
+      const dire = 'https://rocky-chamber-99447.herokuapp.com/api/token/'
       const data = {username:this.formulario.username, password:this.formulario.password}
       axios
         .post(dire, data)
@@ -80,7 +80,7 @@ export default {
     }
   ,
     createTablero(){
-      const url = "/api/api/v1/tableros/";
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/tableros/";
       const tablero= {
         nombre:'Default',
         descripcion:'pruebapost1',
@@ -107,7 +107,7 @@ export default {
         });
     },
     newUser(id){
-      const url = "/api/api/v1/users/";
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/users/";
       axios
         .post(url,this.formulario)
         .then(response => {

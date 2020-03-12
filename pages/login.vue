@@ -42,7 +42,7 @@ export default {
   methods: {
     ...mapMutations(['login']),
     onSubmit() {
-      const dire = '/api/api/token/'
+      const dire = 'https://rocky-chamber-99447.herokuapp.com/api/token/'
       const data = this.form
       axios
         .post(dire, data)
