@@ -507,7 +507,7 @@ var element = document.getElementById(id);
           Authorization: "Bearer " + this.$store.state.user.token
         }
       };
-      const url = "https://rocky-chamber-99447.herokuapp.com//api/v1/listas/";
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/listas/";
       axios
         .get(url, yourConfig)
         .then(response => {
