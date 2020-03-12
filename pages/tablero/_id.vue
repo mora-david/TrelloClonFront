@@ -481,7 +481,7 @@ var element = document.getElementById(id);
     },
 
     getTableros() {
-      const url = "https://rocky-chamber-99447.herokuapp.com//api/v1/tableros/";
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/tableros/";
       const yourConfig = {
         headers: {
           Authorization: "Bearer " + this.$store.state.user.token
