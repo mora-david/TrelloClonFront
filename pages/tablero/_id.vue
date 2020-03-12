@@ -448,7 +448,7 @@ var element = document.getElementById(id);
     pushCards1(nombre1, id, idtemp, c,b, b1, idtemp1,a) {
       var d = new Date()
       var fecha = `${d.getFullYear()}-${1}${d.getMonth()+1}-${d.getDate()}`
-      const url = "https://rocky-chamber-99447.herokuapp.com//api/v1/tarjetas/";
+      const url = "https://rocky-chamber-99447.herokuapp.com/api/v1/tarjetas/";
       const yourConfigh = {
         headers: {
           Authorization: `Bearer ${this.$store.state.user.token}`
