@@ -1,11 +1,13 @@
 <template>
     <div>
+              <h1 class="text-center mb-5">LISTAS</h1>
+
       <div class="container mt-5">
-    <h1 class="text-center mb-5">LISTAS</h1>
+    
     <div class="d-flex flex-row bd-highlight mb-3 justify-content-center flex-wrap">
     <div v-for="list in elemdeploy" :key="list.id" class="p-2 bd-highlight">
       <div class="">
-      <div class="card" style="width: 18rem;">
+      <div class="card cardtab" style="width: 18rem;">
   <img src="" class="card-img-top" alt="...">
   <div class="card-body">
     <h4 class="card-title text-center">{{list.nombre}}</h4>
@@ -170,7 +172,13 @@ this.destroy('hidden123')
 </script>
 
 <style>
-body {
-    
+body{
+  color: #88ddad
 }
+
+.cardtab{
+  border-radius: 20px;
+  background: #fbf8f8;
+}
+
 </style>

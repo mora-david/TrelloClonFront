@@ -1,16 +1,26 @@
 <template>
   <div>
-    <div>{{$store.state.user.token}}</div>
+    <p class=container>{{$store.state.user.token}}</p>
+    <div class="container addlist">
+        <h4 @click="newList()">Añadir Lista</h4>
+        <div>
+          <h5 style="display:inline">Nombre: </h5><input style="display:inline" type="text" name="" id="inputadd"><button @click="newList('inputadd')">Add</button>
+        </div>
+      </div>
+    <div class="container-list container" id='list-container'>
 
-    <div class="container-list container">
       <div
         class="child-list mt-5"
-        v-for="list in this.lister"
+        v-for="list in this.lists"
         :key="list.id"
         :id="'parent'+list.id"
       >
-        <p class="element-list">{{list.nombre}}</p>
-
+        <p :id="'listname'+list.id"  class="element-list">{{list.nombre}}</p>
+        <input type="text" placeholder="edit" class="hiddelement" :id="'input'+list.id">
+        <button @click="saveList(list.id, 'input'+list.id,'listname'+list.id,'savebutton'+list.id)" class="hiddelement" :id="'savebutton'+list.id">Save</button>
+        <div><button @click="toggleList(list.id, 'input'+list.id,'listname'+list.id,'savebutton'+list.id)" class="buttonE" style="display:inline">E</button>
+        <button @click="delateList(list.id,'parent'+list.id,'list-container')" class="buttonD" style="display:inline">D</button></div>
+        
         <div v-for="card in cards" :key="card.id" :id="'child'+card.id+list.id">
           <div class="element-card" v-if="card.lista == list.id" :id="'element-card'+card.id+list.id">
             <div style="display:inline-block;">
@@ -18,7 +28,7 @@
             </div>
           </div>
           <div class="showlist"> 
-            <a v-if="card.lista==list.id" :id="'editbtn'+card.id+list.id" class="button-edit" @click="togglehidde('editbtn' + card.id+list.id, 'element-card' + card.id+list.id,'idedit' + card.id+list.id,'btn'+card.id+list.id,'edit')"
+            <a v-if="card.lista==list.id" :id="'editbtn'+card.id+list.id" class="button-edit" @click="togglehidde('editbtn' + card.id+list.id, 'element-card' + card.id+list.id,'idedit' + card.id+list.id,'btn'+card.id+list.id,'edit',card.id, list.id)"
             >Edit</a>
             <a v-if="card.lista==list.id"
               @click="delateCards(card.id,'parent'+list.id, 'child'+card.id+list.id)"
@@ -26,7 +36,7 @@
             >Delate</a>
             </div>
             <div v-if="card.lista == list.id" style="dip"><input class="hiddelement" :id="'idedit' + card.id+list.id" type="text" placeholder="Editar" value /> 
-            <a @click="togglehidde('editbtn' + card.id+list.id, 'element-card' + card.id+list.id,'idedit' + card.id+list.id,'btn'+card.id+list.id, 'save')" class="hiddelement button-save" :id="'btn'+card.id+list.id">Save</a>  
+            <a @click="togglehidde('editbtn' + card.id+list.id, 'element-card' + card.id+list.id,'idedit' + card.id+list.id,'btn'+card.id+list.id, 'save',card.id, list.id)" class="hiddelement button-save" :id="'btn'+card.id+list.id">Save</a>  
             
              </div>
         </div>
@@ -37,6 +47,9 @@
         </div>
       </div>
     </div>
+
+  
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
     <script>
       token = {{"'"+tkn+"'"}}
@@ -51,13 +64,15 @@
       axios
         .delete(url, yourConfig)
         .then(response => {
-          console.log('elemento eliminado ' + id)
           return response.data.results;
        })
         .catch(() => {
           alert("error");
         });
     }
+
+    
+
     </script>
   </div>
 </template>
@@ -80,7 +95,8 @@ export default {
       input1: "tarea",
       cardid: '',
       cardidarr: [],
-      toptop: ''
+      toptop: '',
+      lasttablero:'vacío'
     };
   },
   computed: {
@@ -94,17 +110,19 @@ export default {
     },
     table: function() {
       this.tablero = this.elemdeploy.filter(
-        element => element.id == this.$route.params.id
+        element => element.id == 10
       );
       return this.tablero;
     },
 
-    lister: function() {
-      this.lists = this.lists.filter(
-        element => element.tablero == this.$route.params.id
-      );
-      return this.lists;
-    }
+  //  lister: function() {
+    //  this.lists = this.lists.filter(
+        //element => element.tablero == this.$route.params.id
+       // element => element.tablero == 11
+      
+      //);
+      //return this.lists;
+    //}
   },
 
   created() {
@@ -116,37 +134,176 @@ export default {
     this.calltopid()
     this.callcardid()
     this.getlastid()
+    this.getlastidtablero()
   },
   updated() {
     this.destroy("hidden123");
   },
+  
+
+
+
+
+
+
+  
   methods: {
-    togglehidde(id,id2,id3,id4,save){
-   console.log(id,id2,id3,id4)
+    delateList(id, child, parent){
 
 
-  console.log()
+      
+
+
+        //const url = "/api/api/v1/listas/"+id
+        //const url = "/api/api/v1/listas/" + 6 + "/";
+        const url = `/api/api/v1/listas/${id}/`
+        console.log(url)
+        let parent1 = document.getElementById(parent);
+        let child1 = document.getElementById(child);
+      parent1.removeChild(child1);
+        const yourConfig = {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.user.token}`
+        }
+      };
+
+        axios
+        .delete(url, yourConfig)
+        .then(response => {
+          return response.data.results;
+        })
+        .catch(() => {
+          alert("error");
+        });
+
+
+
+
+
+    },
+
+    toggleList(id,input,name,save){
+        var element = document.getElementById(name);
+      element.classList.toggle("hiddelement");
+      
+      //var element1 = document.getElementById(id2);
+      //element1.classList.toggle("hiddelement");
+
+
+      var element2 = document.getElementById(input);
+      element2.classList.toggle("showelement");
+
+      element2.value = element.innerHTML
+
+      var element3 = document.getElementById(save);
+      element3.classList.toggle("showelement");},
+
+
+    saveList(id,input,nombre,save){
+
+        const url = `/api/api/v1/listas/${id}/`
+         var element3 = document.getElementById(input).value;
+         document.getElementById(nombre).innerHTML = element3
+         this.toggleList(id,input,nombre,save)
+      const yourConfigh = {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.user.token}`
+        }
+      };
+      const yourConfigb = {
+        nombre: element3,
+      };
+
+      axios
+        .patch(url, yourConfigb, yourConfigh)
+        .then(response => {
+           response
+           
+        })
+        .catch(() => {
+          alert("error");
+        });
+        
+    },
+
+
+    
+    newList(id){
+      console.log(document.getElementById(id).value)
+      var d = new Date()
+      var fecha = `${d.getFullYear()}-${1}${d.getMonth()+1}-${d.getDate()}`
+      console.log(fecha)
+      const url = "/api/api/v1/listas/";
+      const yourConfigh = {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.user.token}`
+        }
+      };
+      if (document.getElementById(id).value == "") {
+        document.getElementById(id).value = "empty";
+      }
+
+      const yourConfigb = {
+        nombre: document.getElementById(id).value,
+        tablero: parseInt(this.lasttablero),
+        fecha_creacion: '2025-12-12',
+        posicion: '1000'
+      };
+      axios
+        .post(url, yourConfigb, yourConfigh)
+        .then(response => {
+           this.lists.push(response.data)
+           //this.getlastid(idtemp, c,b,b1, idtemp1,a);
+        })
+        .catch(() => {
+          //alert("error");
+          
+        });
+
+
+    },
+    togglehidde(id,id2,id3,id4,save,idp,lst){
 
 var element = document.getElementById(id);
    element.classList.toggle("hiddelement");
   
    var element1 = document.getElementById(id2);
    element1.classList.toggle("hiddelement");
-console.log(element1.firstChild.innerHTML)
+
    var element2 = document.getElementById(id3);
    element2.classList.toggle("showelement");
 
    var element3 = document.getElementById(id4);
    element3.classList.toggle("showelement");
 
-console.log(element2)
+
   
   if(save == 'edit')
   element2.value = element1.firstChild.firstChild.innerHTML
   else
   element1.firstChild.firstChild.innerHTML = element2.value
 
+   {
+      const url = "/api/api/v1/tarjetas/" + idp + '/';
+      const yourConfigh = {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.user.token}`
+        }
+      };
+      const yourConfigb = {
+        nombre: element1.firstChild.firstChild.innerHTML,
+        lista: lst.toString(),
+      };
 
+      axios
+        .patch(url, yourConfigb, yourConfigh)
+        .then(response => {
+           response
+        })
+        .catch(() => {
+          alert("error");
+        });
+    }
 
 
     },
@@ -158,11 +315,9 @@ console.log(element2)
       return this.cardid
     },
     
-    printer() {
-      console.log("hello");
-    },
     delateCards(id, parent, child) {
       const url = "/api/api/v1/tarjetas/" + id + "/";
+      console.log(url)
       let parent1 = document.getElementById(parent);
       let child1 = document.getElementById(child);
       parent1.removeChild(child1);
@@ -183,10 +338,11 @@ console.log(element2)
     pushCards(a, b, idd) {
       var idtemp = "temp" + Date.now();
       var c = document.getElementById(a).value;
+      //document.getElementById(a).value
       var d = document.getElementById(b).innerHTML;
       var b1 = '"' + b.toString() + '"';
       var idtemp1 = '"' + idtemp.toString() + '"';
-      this.pushCards1(c, idd, idtemp, c,b, b1, idtemp1);
+      this.pushCards1(c, idd, idtemp, c,b, b1, idtemp1,a);
       //this.getlastid(idtemp, c,b, b1, idtemp1);
     },
 
@@ -197,15 +353,13 @@ console.log(element2)
       }
     },
     numpageprevnext(act, num) {
-      console.log(this.larr.length);
-      console.log(num);
       if (num <= 0) num = 1;
 
       if (act == "na") this.prevp = Number(num);
       else if (act == "bef" && num != 1) this.prevp = Number(num) - 1;
       else if (act == "next" && num < this.larr.length)
         this.prevp = Number(num) + 1;
-      console.log(this.prevp);
+
     },
     elemforpage3(a, b) {
       this.elemdeploy = [];
@@ -232,7 +386,6 @@ console.log(element2)
     removeElementsByClass(className) {
       var elements = document.getElementsByClassName(className);
       this.dompr = elements;
-      console.log(this.dompr[0]);
       while (elements.length > 0) {
         elements[0].parentNode.removeChild(elements[0]);
       }
@@ -241,7 +394,8 @@ console.log(element2)
       if (idt == idl) return lista;
       else return "hidden123";
     },
-    getlastid(idtemp,c,b,b1,idtemp1){
+    getlastid(idtemp,c,b,b1,idtemp1,a){
+      let x = `<a v-if="card.lista==list.id" :id="'editbtn'+card.id+list.id" class="button-edit" @click="togglehidde('editbtn' + card.id+list.id, 'element-card' + card.id+list.id,'idedit' + card.id+list.id,'btn'+card.id+list.id,'edit',card.id, list.id)">Edit</a>`
       const yourConfig = {
         headers: {
           Authorization: "Bearer " + this.$store.state.user.token
@@ -251,20 +405,23 @@ console.log(element2)
         .get("/api/api/v1/tarjetas1/", yourConfig)
         .then(response => {
           this.toptop = response.data.results;
-          var e =
-        '<div id="' +
-        idtemp +
-        '" class="element-card" v-if="card.lista == list.id"><i style="margin:7px" class="fas fa-grip-vertical">' +
-        `${c}` +
-        "</i><a onclick='delatelem(document.getElementById(" +
-        b1 +
-        "),document.getElementById(" +
-        idtemp1 +
-        ")," +
-        this.toptop[0].id +
-        ")' class='button-delate'>Delate</a></div>";
-      document.getElementById(b).innerHTML += e;
-        })
+          document.getElementById(a).value = ""
+        })  
+        .catch(() => {
+          //alert("error");
+        });
+    },
+    getlastidtablero(){
+      const yourConfig = {
+        headers: {
+          Authorization: "Bearer " + this.$store.state.user.token
+        } 
+      };
+      axios
+        .get("/api/api/v1/tableros/", yourConfig)
+        .then(response => { 
+          this.lasttablero = response.data.results[0].id
+        })  
         .catch(() => {
           //alert("error");
         });
@@ -288,7 +445,9 @@ console.log(element2)
         });
         
     },
-    pushCards1(nombre1, id, idtemp, c,b, b1, idtemp1) {
+    pushCards1(nombre1, id, idtemp, c,b, b1, idtemp1,a) {
+      var d = new Date()
+      var fecha = `${d.getFullYear()}-${1}${d.getMonth()+1}-${d.getDate()}`
       const url = "/api/api/v1/tarjetas/";
       const yourConfigh = {
         headers: {
@@ -305,19 +464,19 @@ console.log(element2)
         descripcion: "VSCC",
         miembros: ["1"],
         dueño: "1",
-        fecha_creacion: "2020-11-11",
-        fecha_vencimiento: "2021-11-11",
-        posicion: "666"
+        fecha_creacion: '2030-11-11',
+        fecha_vencimiento: "2031-11-11",
+        posicion: "1111"
       };
-
       axios
         .post(url, yourConfigb, yourConfigh)
         .then(response => {
-           response
-           this.getlastid(idtemp, c,b, b1, idtemp1);
+           this.cards.push(response.data)
+           this.getlastid(idtemp, c,b, b1, idtemp1,a);
         })
         .catch(() => {
-          alert("error");
+          //alert("error");
+          
         });
     },
 
@@ -331,6 +490,8 @@ console.log(element2)
       axios
         .get(url, yourConfig)
         .then(response => {
+
+
           this.categories = response.data.results;
           this.prueba = response.data;
           this.arrPag();
@@ -437,6 +598,20 @@ body
 .showelement
   display: block
 
+.addlist
+  border: 1px solid black
+  margin-top: 50px
+  margin-left: 400px
+  text-align: center
+  cursor: pointer
+  width: 400px
+  padding: 20px
+
+.buttonE
+  background: yellow
+
+.buttonD
+  background: red
 
 
 </style>

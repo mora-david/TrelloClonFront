@@ -1,11 +1,12 @@
 <template>
     <div>
+      <h1 class="text-center mb-5">TABLEROS</h1>
       <div class="container mt-5">
-    <h1 class="text-center mb-5">TABLEROS</h1>
+    
     <div class="d-flex flex-row bd-highlight mb-3 justify-content-center flex-wrap">
-    <div v-for="category in elemdeploy" :key="category.id" class="p-2 bd-highlight">
+    <div v-for="category in elemdeploy" :key="category.id" class=" p-2 bd-highlight">
       <div class="">
-      <div class="card" style="width: 18rem;">
+      <div class="card cardtab" style="width: 18rem;">
   <div class="card-body">
     <h4 class="card-title text-center">{{category.nombre}}</h4>
     <p>{{category.id}}</p>
@@ -171,5 +172,9 @@ this.destroy('hidden123')
 
 <style lang="sass">
 body
-  color: red
+  color: #ea4c4c
+
+.cardtab
+  border-radius: 20px
+  background: #e6d8e0
 </style>

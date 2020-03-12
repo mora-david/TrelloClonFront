@@ -82,6 +82,7 @@ body
   transform:
   border-radius: 20px
   height: 300px
+  background: #9c24d2
 
 .login-box input[type = "username"], input[type = "password"]
   border-radius: 24px
@@ -89,21 +90,19 @@ body
   margin-top: 5%
   margin-left: 5%
   display: inline-block
-
-
+  
 .btnbtn
   background: #2d3436
   border: solid #a29bfe
   text-align: center
-  margin-left: 40%
+  margin-bottom: 5px
 
 .btnbtn:hover
   background: white
   color: grey
 
-  
-
-  
+.nuxt-link-exact-active
+  color: orange
 
 </style>
 

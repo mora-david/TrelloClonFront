@@ -55,7 +55,7 @@ export default {
   ],
   proxy: {
     '/api': {
-      target: 'http://localhost:8000',
+      target: 'https://rocky-chamber-99447.herokuapp.com',
       pathRewrite: {
         '^/api' : '/'
         }
