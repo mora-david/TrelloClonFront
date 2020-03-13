@@ -55,7 +55,8 @@ export default {
           this.login(obj)
             this.elemprueba = response
           console.log(response.data)
-          alert('logeado')
+           this.$router.push('/tablero')
+          alert('logeado')  
         })
         .catch(() => {
           alert('error')

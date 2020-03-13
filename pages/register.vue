@@ -71,11 +71,11 @@ export default {
           this.login(obj)
             this.elemprueba = response
           console.log(response.data)
-          alert('logeado')
+         // alert('logeado')
           this.createTablero()
         })
         .catch(() => {
-          alert('error')
+         // alert('error')
         })
     }
   ,
@@ -97,12 +97,13 @@ export default {
       axios
         .post(url,tablero, yourConfigh)
         .then(response => {
-          alert('tablero')
+          this.$router.push('/tablero')
+          //alert('tablero')
            //this.lists.push(response.data)
            //this.getlastid(idtemp, c,b,b1, idtemp1,a);
         })
         .catch(() => {
-          alert("error");
+        //  alert("error");
           
         });
     },
@@ -117,7 +118,7 @@ export default {
         })
         .catch(() => {
           
-          alert('error.message')
+          //alert('error.message')
         });
 
 

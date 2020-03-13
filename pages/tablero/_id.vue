@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p class=container>{{$store.state.user.token}}</p>
+    <div class='container'>
+    <h2>Bienvenido a tu tablero {{$store.state.user.username}}</h2>
+    </div>
     <div class="container addlist">
         <h4 @click="newList()">Añadir Lista</h4>
         <div>
