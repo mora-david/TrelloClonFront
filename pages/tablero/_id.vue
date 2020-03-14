@@ -325,7 +325,7 @@ var element = document.getElementById(id);
       parent1.removeChild(child1);
       const yourConfig = {
         headers: {
-          Authorization: "Bearer" + this.$store.state.user.token
+          Authorization: "Bearer " + this.$store.state.user.token
         }
       };
       axios
